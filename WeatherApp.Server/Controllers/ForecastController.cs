@@ -3,17 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace WeatherApp.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [Route("api/[controller]")]
+    public class ForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly ILogger<ForecastController> _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public ForecastController(ILogger<ForecastController> logger)
         {
             _logger = logger;
         }
@@ -28,6 +23,12 @@ namespace WeatherApp.Server.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
         }
     }
 }
